@@ -181,6 +181,7 @@ def main():
         total = 0
     else:
         guides = make_guides(all_docs)
+    print(f"[guide] 中文导读生成 {len(guides)}/{len(all_docs)} 篇")
         blocks = []
         for name, *_ in TOPICS:
             tdocs = [d for d in all_docs if d["topic"] == name]
