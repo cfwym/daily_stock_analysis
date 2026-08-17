@@ -1,0 +1,27 @@
+name: 每日文献检索
+
+on:
+  # 每天北京时间 18:00（UTC 10:00）
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+
+jobs:
+  lit-search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 运行文献检索
+        run: python scripts/lit_search.py
+        env:
+          AIHUBMIX_API_KEY: ${{ secrets.AIHUBMIX_API_KEY }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
