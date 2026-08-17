@@ -22,6 +22,7 @@ jobs:
         run: python scripts/lit_search.py
         env:
           AIHUBMIX_API_KEY: ${{ secrets.AIHUBMIX_API_KEY }}
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-          EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS }}
+          # 文献检索专用邮箱（与股票分析分开）
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER_LIT }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD_LIT }}
+          EMAIL_RECEIVERS: ${{ secrets.EMAIL_RECEIVERS_LIT }}
