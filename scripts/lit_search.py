@@ -108,6 +108,7 @@ def make_guides(docs):
         body = {
             "model": AIHUBMIX_MODEL,
             "messages": [{"role": "user", "content": prompt}],
+            "thinking": {"type": "disabled"},  # glm-4.7 默认推理，禁用避免思考占满 max_tokens 导致 content 为空
             "temperature": 0.3, "max_tokens": 2048,
         }
         try:
