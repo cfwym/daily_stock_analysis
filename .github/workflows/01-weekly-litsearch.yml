@@ -1,9 +1,9 @@
 name: 每周文献检索
 
 on:
-  # 每周一北京时间 18:00（UTC 周一 10:00）
+  # 每周五北京时间 18:00（UTC 周五 10:00）
   schedule:
-    - cron: '0 10 * * 1'
+    - cron: '0 10 * * 5'
   workflow_dispatch:
 
 jobs:
