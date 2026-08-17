@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-每日文献检索：PubMed E-utilities + aihubmix 中文导读 + 163 邮件
-仅依赖 Python 标准库。由 GitHub Actions 每天北京时间 18:00 触发。
+每周文献检索：PubMed E-utilities + aihubmix 中文导读 + 163 邮件
+仅依赖 Python 标准库。由 GitHub Actions 每周一北京时间 18:00 触发。
 """
 import os, json, smtplib, sys, time
 import urllib.request, urllib.parse
@@ -24,13 +24,13 @@ EMAIL_RECEIVERS = os.environ.get("EMAIL_RECEIVERS", EMAIL_SENDER)
 # ---- 检索主题：(名称, PubMed 检索式, 回看天数, 最大篇数) ----
 TOPICS = [
     ("安非他酮/快感缺失/抑郁",
-     'bupropion AND (anhedonia OR depression)', 1, 10),
+     'bupropion AND (anhedonia OR depression)', 7, 10),
     ("光照治疗/青少年抑郁/昼夜节律",
-     '("light therapy" OR "bright light therapy") AND (adolescent* OR youth) AND (depressi* OR circadian)', 1, 10),
+     '("light therapy" OR "bright light therapy") AND (adolescent* OR youth) AND (depressi* OR circadian)', 7, 10),
     ("精神药物/心脏安全/心电图",
-     '(antipsychotic* OR psychotropic) AND (QT OR "cardiac safety" OR arrhythmia OR ECG)', 1, 10),
+     '(antipsychotic* OR psychotropic) AND (QT OR "cardiac safety" OR arrhythmia OR ECG)', 7, 10),
     ("精神分裂症/多模态预测",
-     'schizophrenia AND (fMRI OR EEG OR ECG) AND (predict* OR "treatment response")', 1, 10),
+     'schizophrenia AND (fMRI OR EEG OR ECG) AND (predict* OR "treatment response")', 7, 10),
 ]
 
 
@@ -174,7 +174,7 @@ def main():
 
     date_str = datetime.now().strftime("%Y-%m-%d")
     if not all_docs:
-        html = "<p>今日无新增文献。</p>"
+        html = "<p>本周无新增文献。</p>"
         total = 0
     else:
         guides = make_guides(all_docs)
@@ -206,10 +206,10 @@ def main():
             f"<h2 style='color:#333;'>每日文献检索 - {date_str}</h2>"
             f"<p style='color:#999;'>PubMed 新增 {total} 篇（自动检索 + AI 中文导读）</p>"
             f"{''.join(blocks)}"
-            "<p style='color:#aaa;font-size:11px;margin-top:30px;'>由 GitHub Actions 自动生成，每日 18:00 发送。</p></div>"
+            "<p style='color:#aaa;font-size:11px;margin-top:30px;'>由 GitHub Actions 自动生成，每周一 18:00 发送。</p></div>"
         )
 
-    subject = f"每日文献检索 {date_str}（{total} 篇）"
+    subject = f"每周文献检索 {date_str}（{total} 篇）"
     send_email(subject, html)
     print(f"[done] 邮件已发送至 {EMAIL_RECEIVERS}，共 {total} 篇")
 
