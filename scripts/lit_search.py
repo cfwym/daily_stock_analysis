@@ -4,7 +4,7 @@
 每周文献检索：PubMed E-utilities + aihubmix 中文导读 + 163 邮件
 仅依赖 Python 标准库。由 GitHub Actions 每周五北京时间 18:00 触发。
 """
-import os, json, smtplib, sys, time
+import os, json, re, smtplib, sys, time
 import urllib.request, urllib.parse
 import xml.etree.ElementTree as ET
 from email.mime.text import MIMEText
@@ -118,10 +118,12 @@ def make_guides(docs):
             content = j["choices"][0]["message"]["content"]
             for line in content.splitlines():
                 s = line.strip()
-                if s and ":" in s:
-                    pmid = s.split(":")[0].strip()
-                    if pmid.isdigit():
-                        guides[pmid] = s.split(":", 1)[1].strip()
+                if not s:
+                    continue
+                # aihubmix 可能输出 "PMID 12345: 导读" 或 "12345: 导读"，兼容两种
+                m = re.match(r"^(?:PMID\s*)?(\d+)\s*:", s)
+                if m:
+                    guides[m.group(1)] = s.split(":", 1)[1].strip()
         except Exception as e:
             print(f"[warn] 导读生成失败: {e}")
     return guides
