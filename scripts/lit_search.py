@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 每周文献检索：PubMed E-utilities + aihubmix 中文导读 + 163 邮件
-仅依赖 Python 标准库。由 GitHub Actions 每周一北京时间 18:00 触发。
+仅依赖 Python 标准库。由 GitHub Actions 每周五北京时间 18:00 触发。
 """
 import os, json, smtplib, sys, time
 import urllib.request, urllib.parse
@@ -203,10 +203,10 @@ def main():
         total = len(all_docs)
         html = (
             "<div style='font-family:Arial,Microsoft YaHei,sans-serif;max-width:720px;margin:auto;'>"
-            f"<h2 style='color:#333;'>每日文献检索 - {date_str}</h2>"
+            f"<h2 style='color:#333;'>每周文献检索 - {date_str}</h2>"
             f"<p style='color:#999;'>PubMed 新增 {total} 篇（自动检索 + AI 中文导读）</p>"
             f"{''.join(blocks)}"
-            "<p style='color:#aaa;font-size:11px;margin-top:30px;'>由 GitHub Actions 自动生成，每周一 18:00 发送。</p></div>"
+            "<p style='color:#aaa;font-size:11px;margin-top:30px;'>由 GitHub Actions 自动生成，每周五 18:00 发送。</p></div>"
         )
 
     subject = f"每周文献检索 {date_str}（{total} 篇）"
